@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="Meteor WebSMS">
+  <publishDate position="left" format="dd-MMM-yyyy"/>
+  <body>
+    <menu name="Meteor WebSMS">
+      <item name="Home" href="index.html"/>
+    </menu>
+    <menu ref="reports"/>
+  </body>
+</project>

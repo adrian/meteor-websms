@@ -1,0 +1,13 @@
+<projectDescription>
+  <name>meteor-websms</name>
+  <comment>Meteor WebSMS is a Java API and command line tool for sending SMS messages via the Irish mobile operator Meteor&apos;s subscriber website (http://www.mymeteor.ie)</comment>
+  <projects/>
+  <buildSpec>
+    <buildCommand>
+      <name>org.eclipse.jdt.core.javabuilder</name>
+    </buildCommand>
+  </buildSpec>
+  <natures>
+    <nature>org.eclipse.jdt.core.javanature</nature>
+  </natures>
+</projectDescription>

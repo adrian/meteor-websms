@@ -1,0 +1,117 @@
+ ------
+ Introduction
+ ------
+ Adrian Smith
+ ------
+
+Meteor WebSMS
+
+ <<NOTE: 5-Dec-2007 Meteor recently updated their website meaning that this API no long works. If you have the time (and interest) then you're more than welcome to fix it. It'll probably be a while before I get around to looking at it.>>
+
+ Meteor WebSMS is a Java API and a command line tool for sending SMS messages 
+ via the Irish mobile operator {{{http://www.meteor.ie}Meteor's}}
+ {{{http://www.mymeteor.ie}subscriber website}}.
+
+Download
+
+* Version 1.2 : 15-Oct-2007
+
+*-----------------------------------------------------------------------+----------+
+| <<File>>                                                              | <<Size>> |
+*-----------------------------------------------------------------------+----------+
+| {{{/meteor-websms/meteor-websms-1.2.tar.gz}meteor-websms-1.2.tar.gz}} | 438 KB   |
+*-----------------------------------------------------------------------+----------+
+| {{{/meteor-websms/meteor-websms-1.2.zip}meteor-websms-1.2.zip}}       | 446 KB   |
+*-----------------------------------------------------------------------+----------+
+
+Installation
+
+ * Extract the tarball/zip
+
+ * Meteor are using an in-house generated SSL certificate rather than one from a
+   Certification Authority such as Verisign. For this reason we need to add
+   their certificate to our KeyStore of trusted certificates. To do this copy
+   the bundled file 'jssecacerts' into the .\lib\security folder of your JRE
+   (something like C:\Program Files\Java\jre1.6.0_02\lib\security). 
+
+Usage
+
+* Command Line Tool
+
+---
+ usage: mwsms
+  -f,--free                              report back the number of free messages
+                                         left this month
+  -F,--messageFile <file>                file containing the message to send
+  -h,--help                              show this help message
+  -m,--message <message>                 the message to send
+  -p,--password <password>               your password/pin - if not supplied
+                                         you'll be prompted
+  --proxy <proxy>                        http proxy in the format
+                                         <server>:<port> - port defaults to 8080
+                                         if not given
+  --proxy-password <proxy password>      http proxy password
+  --proxy-username <proxy username>      http proxy username
+  -q,--quiet                             Operate quietly
+  -r,--recipient <recipient>             the recipient's number, accepts 
+                                         +{CC}{NDC}{SN} or 00{CC}{NDC}{SN} or
+                                         {NDC}{SN}
+  -u,--username <username>               your mobile number
+
+  username and password are always required
+  recipient and message OR messageFile are required for sending a message
+---
+
+ Examples...
+
+ To retrieve the number of free messages you have left...
+ 
+---
+  mwsms -u 0853338475 -p 3384 -f
+---
+
+ To send a message...
+ 
+---
+  mwsms -u 0853338475 -p 3384 -r 0863338264 -m "where r u?"
+---
+
+* API
+
+ Example usage with no HTTP proxy.
+ 
+---
+Meteor meteor = new Meteor();
+MSISDN recipient = new MSISDN("0867654321");
+meteor.login("0851234567", "1234");
+meteor.sendMessage("hi u k?", recipient);
+meteor.logout();
+---
+
+ Example usage with HTTP proxy, no username or password required.
+
+---
+Meteor meteor = new Meteor("www-proxy.domain.com", 8080);
+MSISDN recipient = new MSISDN("0867654321");
+meteor.login("0851234567", "1234");
+meteor.sendMessage("hi u k?", recipient);
+meteor.logout();
+---
+
+ Example usage with HTTP proxy requiring username or password.
+
+---
+Meteor meteor = new Meteor("www-proxy.domain.com", 8080, "myuser", "mypass");
+MSISDN recipient = new MSISDN("0867654321");
+meteor.login("0851234567", "1234");
+meteor.sendMessage("hi u k?", recipient);
+meteor.logout();
+---
+
+** The Properties File
+
+ Rather than having to pass in several parameters to the <<<mwsms>>> tool you
+ use the properties file <<<mwsms.properties>>> located in the <<<lib>>> 
+ folder. This file allows you to set almost any parameter you can on the 
+ command line. Parameters you pass on the command line override those set in
+ the properties file.
